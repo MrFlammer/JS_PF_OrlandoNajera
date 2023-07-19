@@ -1,12 +1,85 @@
-// Arreglos
+// constructor de datos
 
-const ingresos = [];
-const egresos = [];
+class Dato {
+    atributos = {}
 
-//Controlador del modulo de Presupuesto
+    constructor(descripcion, valor){;
+        this.atributos._descripcion = descripcion;
+        this.atributos._valor = valor;
+    }
+
+    get descripcion(){
+        return this.atributos._descripcion;
+    }
+    set descripcion(nuevaDescripcion){
+        this.atributos._descripcion = nuevaDescripcion;
+    }
+
+    get valor(){
+        return this.atributos._valor;
+    }
+    set valor(nuevoValor){
+        this.atributos._valor = nuevoValor;
+    }
+}
+
+//clase constructor de Ingresos
+class Ingreso extends Dato {
+    contarIngresos = 0;
+
+    constructor(id, descripcion, valor){
+        super(descripcion, valor);
+        this.atributos._id = id;
+        
+    }
+
+    get id(){
+        return this.atributos._id;
+    }
+}
+
+//clase constructor de Egresos
+class Egreso extends Dato {
+    contarEgresos = 0;
+
+    constructor(id, descripcion, valor){
+        super(descripcion, valor)
+        this.atributos._id = id;
+        
+    }
+
+    get id(){
+        return this.atributos._id;
+    }
+}
+
+/// Datos
+let ingresos = [];
+let egresos = [];
+
+///generadores de datos
+
+function nuevoIngreso(descripcion, valor) {
+    new Ingreso(descripcion,valor);
+    ingresos.push({ Descripcion: descripcion, valor: valor});
+}
+
+function nuevoEgreso(descripcion, valor) {
+    new Egreso(descripcion,valor);
+    egresos.push({ Descripcion: descripcion, valor: valor});
+}
+
+nuevoIngreso("Salario", 20000);
+nuevoIngreso("Venta auto", 50000);
+
+nuevoEgreso("Renta", 4000);
+nuevoEgreso("Ropa", 800);
+
+/// Controlador del modulo de presupuesto
+
 const cargarCabecero = () => {
-    let presupuesto = totalIngresos() - totalEgresos();
-    let porcentajeEgreso = totalEgresos() / totalIngresos();
+    var presupuesto = totalIngresos() - totalEgresos();
+    var porcentajeEgreso = totalEgresos() / totalIngresos();
 
     document.getElementById("presupuesto").innerHTML = formatoMoneda(presupuesto);
     document.getElementById("porcentaje").innerHTML = formatoPorcentaje(porcentajeEgreso);
@@ -14,88 +87,20 @@ const cargarCabecero = () => {
     document.getElementById("egresos").innerHTML = formatoMoneda(totalEgresos());
 }
 
-//Constructores de Objetos
+/// controladores de las operaciones principales
 
-class Dato {
-    atributos = {};
- 
-    constructor (descripcion, valor){
-       this.atributos._descripcion = descripcion;
-       this.atributos._valor = valor;
-    };
- 
-    get descripcion(){
-       return this.atributos._descripcion;
-    }
- 
-    set descripcion(nuevaDescripcion){
-       if (typeof nuevaDescripcion !== "string"){
-          alert("Descripcion invalida")
-          return;
-       }
- 
-       this.propiedades._descripcion = nuevaDescripcion
-    }
- 
-    get valor(){
-       return this.atributos._valor;
-    }
- 
-    set valor(nuevoValor){
-       if (typeof nuevoValor !== "number"){
-          alert("Valor invalido")
-          return;
-       }
- 
-       this.propiedades._valor = nuevoValor
-    }
-}
-
-class Ingreso extends Dato {
-    contarIngresos = 0;
-
-    constructor (descripcion, valor, id){
-        super(descripcion, valor);
-        this.atributos._id = id;
-    }
-
-    get id(){
-        return this.atributos._id;
-    }
-}
-
-class Egreso extends Dato {
-    contarEgresos = 0;
-
-    constructor (descripcion, valor, id){
-        super(descripcion, valor);
-        this.atributos._id = id;
-    }
-
-    get id(){
-        return this.atributos._id;
-    }
-}
-
-// controladores de las operaciones
 const totalIngresos = () => {
-    let sum = 0;
-    for(let prop of ingresos){
-        sum += ingresos[prop];
-    }
-
+    let sum = ingresos.reduce((previous, current) => {return previous + current.valor}, 0);
     return sum;
 }
 
 const totalEgresos = () => {
-    let sum = 0;
-    for(let prop of egresos){
-        sum += egresos[prop];
-    }
-    return sum;
+    let sum = egresos.reduce((previous, current) => {return previous + current.valor}, 0);
+    return sum
 }
 
-// Formato de Moneda
+///controladores del formato de los datos
+
 const formatoMoneda = (transaccion) => {
     
     const locales = 'esp-MX';
@@ -125,86 +130,76 @@ const formatoPorcentaje = (porcentaje) => {
     return porcentajePrecio;
 }
 
-//Controlador del UI / Carga dinamica de datos
-///Carga de Ingresos
+///Carga dinamica de datos
 
-const cargarIngreso = () => {
+//ingresos
+
+const cargarIngresos = () => {
     let ingresosHTML
-    for (let ingreso of ingresos){
-        crearIngresoHTML(ingresos[prop]);
+    for (let i = 0; i < ingresos.length; i++) {
+        crearIngresoHTMl + JSON.stringify(ingresos[i]);
     }
-
-    let listaIngresos = document.getElementById("lista-ingresos");
+    ingresosHTML = document.getElementById("lista-ingresos");
 }
+const crearIngresoHTMl = (ingreso) => {}
 
-const crearIngresoHTML = (ingreso) => {
-    let ingresoHTML = ` ${document.getElementById("lista-ingresos")} `;
+/// Eliminar Ingresos
 
-    document.querySelector(".elemento-descripcion") = ingreso.descripcion;
-    document.querySelector(".elmento-valor") = formatoMoneda(ingreso.valor);
-    document.querySelector(".ion-ios-close-outline") = eliminarIngreso(document.getElementById("ingreso"));
-
-    return ingresoHTML;
-}
-
-const eliminarIngreso = (id) => {
-    let indiceEliminar = ingresos.findIndex(i = (id) => {ingresos.findIndex = id});
-
+const eliminarIngresos = (id) => {
+    let indiceEliminar = ingresos.findIndex((id) => {
+        for (let i = 0; i < ingresos.length; i++ ){}
+    });
     ingresos.splice(indiceEliminar, 1);
+
+    cargarCabecero();
+    cargarIngresos();
 }
 
-// Carga de Egresos
-
-const cargarEgreso = () => {
+/// Egresos
+const cargarEgresos = () => {
     let egresosHTML
-    for (let egreso of egresos){
-        crearEgresoHTML(egresos[prop]);
+    for (let i = 0; i < egresos.length; i++){
+        crearEgresoHTML(JSON.stringify(egresos[i]));
     }
-
-    let listaEgresos = document.getElementById("lista-egresos")
+    egresosHTML = document.getElementById("lista-egresos");
 }
 
-const crearEgresoHTML = (egreso) => {
-    let egresoHTML = ` ${document.getElementById("lista-egresos")} `;
+const crearEgresoHTML = (egreso) => {}
 
-    document.querySelector(".elemento-descripcion") = egreso.descripcion;
-    document.querySelector(".elemento-valor") = formatoMoneda(egreso.valor);
-    document.querySelector(".ion-ios-close-outline") = eliminarEgreso(document.getElementById("egreso"));
+//Eliminar Egresos
 
-    return egresoHTML;
-}
-
-const eliminarEgreso = (id) => {
-    let indiceEliminar = egresos.findIndex(i = (id) => { egresos.findIndex = id});
-
+const eliminarEgresos = (id) => {
+    let indiceEliminar = egresos.findIndex((id) => {return egresos[i].id = id});
     egresos.splice(indiceEliminar, 1);
+
+    cargarCabecero();
+    cargarEgresos();
 }
 
-// Carga de datos
+/// Cargar Datos
 
-const agregarDatos = () => {
+const agregarDato = () => {
     let forma = document.getElementById("forma");
     let tipo = document.getElementById("tipo");
     let descripcion = document.getElementById("descripcion");
     let valor = document.getElementById("valor");
 
-    //validacion de datos
-    if (descripcion === null && valor === null){
-        return;
-    }
-    else { 
-        if(tipo = ingreso){
-            ingresos.push(new Ingreso(descripcion, valor))
+    if(descripcion !== null && typeof(descripcion) === 'string' || valor !== null && typeof(valor) === 'number'){
+        if(tipo === "ingreso") {
+            // se agrega la descripcion y el valor al arrglo de ingresos
+            nuevoIngreso(descripcion, valor);
+            cargarCabecero();
+            cargarIngresos();
         }
         else {
-            egresos.push(new Egreso(descripcion, valor))
+            //se agrega la descripcion y el valor al arreglo de egresos
+            nuevoEgreso(descripcion, valor);
+            cargarCabecero();
+            cargarEgresos();
         }
     }
 }
 
-// controlador global de la app
 function cargarApp () {
     cargarCabecero();
-    cargarIngreso();
-    cargarEgreso();
 }
