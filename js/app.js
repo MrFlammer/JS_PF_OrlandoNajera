@@ -27,11 +27,10 @@ class Dato {
 class Ingreso extends Dato {
     static contarIngresos = 0;
 
-    constructor(id, descripcion, valor){
+    constructor(descripcion, valor){
         super(descripcion, valor);
-        this.atributos_id = id;
+        this.atributos._id = Ingreso.contarIngresos += 1;
     }
-
     get id(){
         return this.atributos._id;
     }
@@ -39,14 +38,12 @@ class Ingreso extends Dato {
 
 //clase constructor de Egresos
 class Egreso extends Dato {
-    contarEgresos = 0;
+    static contarEgresos = 0;
 
-    constructor(id, descripcion, valor){
+    constructor(descripcion, valor){
         super(descripcion, valor)
-        this.atributos._id = id;
-        
+        this.atributos._id = Egreso.contarEgresos += 1; 
     }
-
     get id(){
         return this.atributos._id;
     }
@@ -57,22 +54,23 @@ let ingresos = [];
 let egresos = [];
 
 ///generadores de datos
-
+///generador de ingresos
 function nuevoIngreso(descripcion, valor) {
     new Ingreso(descripcion,valor);
-    ingresos.push({descripcion: descripcion, valor: valor});
+    ingresos.push({id: Ingreso.contarIngresos, descripcion: descripcion, valor: valor});
 }
-
+//generador de egresos
 function nuevoEgreso(descripcion, valor) {
     new Egreso(descripcion,valor);
-    egresos.push({ descripcion: descripcion, valor: valor});
+    egresos.push({id: Egreso.contarEgresos, descripcion: descripcion, valor: valor});
 }
-
+ //Objetos generados por defecto
 nuevoIngreso("Salario", 20000);
 nuevoIngreso("Venta auto", 50000);
 
 nuevoEgreso("Renta", 4000);
 nuevoEgreso("Ropa", 800);
+
 /// Controlador del modulo de presupuesto
 
 const cargarCabecero = () => {
