@@ -25,12 +25,11 @@ class Dato {
 
 //clase constructor de Ingresos
 class Ingreso extends Dato {
-    contarIngresos = 0;
+    static contarIngresos = 0;
 
     constructor(id, descripcion, valor){
         super(descripcion, valor);
-        this.atributos._id = id;
-        
+        this.atributos_id = id;
     }
 
     get id(){
@@ -61,12 +60,12 @@ let egresos = [];
 
 function nuevoIngreso(descripcion, valor) {
     new Ingreso(descripcion,valor);
-    ingresos.push({ Descripcion: descripcion, valor: valor});
+    ingresos.push({descripcion: descripcion, valor: valor});
 }
 
 function nuevoEgreso(descripcion, valor) {
     new Egreso(descripcion,valor);
-    egresos.push({ Descripcion: descripcion, valor: valor});
+    egresos.push({ descripcion: descripcion, valor: valor});
 }
 
 nuevoIngreso("Salario", 20000);
@@ -74,7 +73,6 @@ nuevoIngreso("Venta auto", 50000);
 
 nuevoEgreso("Renta", 4000);
 nuevoEgreso("Ropa", 800);
-
 /// Controlador del modulo de presupuesto
 
 const cargarCabecero = () => {
@@ -135,20 +133,40 @@ const formatoPorcentaje = (porcentaje) => {
 //ingresos
 
 const cargarIngresos = () => {
-    let ingresosHTML
-    for (let i = 0; i < ingresos.length; i++) {
-        crearIngresoHTMl + JSON.stringify(ingresos[i]);
+    let ingresosHTML = "";
+    for (i = 0; i < ingresos.length; i++) { 
+        ingresosHTML += crearIngresoHTML(ingresos[i]);
     }
-    ingresosHTML = document.getElementById("lista-ingresos");
+    
+    document.getElementById("lista_ingresos").innerHTML = ingresosHTML;
 }
-const crearIngresoHTMl = (ingreso) => {}
+
+const crearIngresoHTML = (ingreso) => {
+    let ingresoHTML = `<div id="lista_ingresos">
+    <div class="elemento limpiarEstilos">
+        <div class="elemento_descripcion">
+        ${ingreso.descripcion}
+        </div>
+
+        <div class="derecha limpiarEstilos">
+            <div class="elemento_valor" id="prueba">
+                ${formatoMoneda(ingreso.valor)}
+            </div>
+
+            <div class="elemento_eliminar">
+                <button class="elemento_eliminar_btn">
+                    <i class="ion-ios-close-outline"></i>
+                </button>
+            </div>
+        </div>
+    </div>`
+    return ingresoHTML;
+}
 
 /// Eliminar Ingresos
 
 const eliminarIngresos = (id) => {
-    let indiceEliminar = ingresos.findIndex((id) => {
-        for (let i = 0; i < ingresos.length; i++ ){}
-    });
+    let indiceEliminar = ingresos.findIndex((id) => {id = ingresos.id; return id});
     ingresos.splice(indiceEliminar, 1);
 
     cargarCabecero();
@@ -157,20 +175,43 @@ const eliminarIngresos = (id) => {
 
 /// Egresos
 const cargarEgresos = () => {
-    let egresosHTML
-    for (let i = 0; i < egresos.length; i++){
-        crearEgresoHTML(JSON.stringify(egresos[i]));
+    let egresosHTML = "";
+    for (i = 0; i < egresos.length; i++) { 
+        egresosHTML += crearIngresoHTML(egresos[i]);
     }
-    egresosHTML = document.getElementById("lista-egresos");
+    
+    document.getElementById("lista_egresos").innerHTML = egresosHTML;
 }
 
-const crearEgresoHTML = (egreso) => {}
+const crearEgresoHTML = (egreso) => {
+    let egresoHTML = `<div id="lista_egresos">
+    <div class="elemento limpiarEstilos">
+        <div class="elemento_descripcion">
+            ${egreso.descripcion}
+        </div>
 
+        <div class="derecha limpiarEstilos">
+            <div class="elemento_valor">
+                ${formatoMoneda(egreso.valor)}
+            </div>
+
+            <div class="elemento_porcentaje">
+                21%
+            </div>
+
+            <div class="elemento_eliminar">
+                <button class="elemento_eliminar_btn">
+                    <i class="ion-ios-close-outline"></i>
+                </button>
+            </div>
+        </div>
+    </div>`
+    return egresoHTML;
+}
 //Eliminar Egresos
 
 const eliminarEgresos = (id) => {
-    let indiceEliminar = egresos.findIndex((id) => {return egresos[i].id = id});
-    egresos.splice(indiceEliminar, 1);
+    let indiceEliminar = "";
 
     cargarCabecero();
     cargarEgresos();
@@ -184,7 +225,7 @@ const agregarDato = () => {
     let descripcion = document.getElementById("descripcion");
     let valor = document.getElementById("valor");
 
-    if(descripcion !== null && typeof(descripcion) === 'string' || valor !== null && typeof(valor) === 'number'){
+    if(descripcion !== "" && typeof(descripcion) === 'string' || valor !== "" && typeof(valor) === 'number'){
         if(tipo === "ingreso") {
             // se agrega la descripcion y el valor al arrglo de ingresos
             nuevoIngreso(descripcion, valor);
@@ -202,4 +243,6 @@ const agregarDato = () => {
 
 function cargarApp () {
     cargarCabecero();
+    cargarIngresos();
+    cargarEgresos();
 }
