@@ -1,5 +1,4 @@
 // constructor de datos
-
 class Dato {
     atributos = {}
 
@@ -22,7 +21,6 @@ class Dato {
         this.atributos._valor = nuevoValor;
     }
 }
-
 //clase constructor de Ingresos
 class Ingreso extends Dato {
     static contarIngresos = 0;
@@ -35,7 +33,6 @@ class Ingreso extends Dato {
         return this.atributos._id;
     }
 }
-
 //clase constructor de Egresos
 class Egreso extends Dato {
     static contarEgresos = 0;
@@ -48,11 +45,9 @@ class Egreso extends Dato {
         return this.atributos._id;
     }
 }
-
 /// Datos
 let ingresos = [];
 let egresos = [];
-
 ///generadores de datos
 ///generador de ingresos
 function nuevoIngreso(descripcion, valor) {
@@ -70,9 +65,7 @@ nuevoIngreso("Venta auto", 50000);
 
 nuevoEgreso("Renta", 4000);
 nuevoEgreso("Ropa", 800);
-
 /// Controlador del modulo de presupuesto
-
 const cargarCabecero = () => {
     const presupuesto = totalIngresos() - totalEgresos();
     const porcentajeEgreso = totalEgresos() / totalIngresos();
@@ -84,7 +77,6 @@ const cargarCabecero = () => {
 }
 
 /// controladores de las operaciones principales
-
 const totalIngresos = () => {
     let sum = ingresos.reduce((previous, current) => {return previous + current.valor}, 0);
     return sum;
@@ -94,9 +86,7 @@ const totalEgresos = () => {
     let sum = egresos.reduce((previous, current) => {return previous + current.valor}, 0);
     return sum
 }
-
 ///controladores del formato de los datos
-
 const formatoMoneda = (transaccion) => {
     
     const locales = 'esp-MX';
@@ -125,20 +115,14 @@ const formatoPorcentaje = (porcentaje) => {
 
     return porcentajePrecio;
 }
-
 ///Carga dinamica de datos
 //ingresos
-
 const cargarIngresos = () => {
     let ingresosHTML = "";
     for (i = 0; i < ingresos.length; i++) { 
         ingresosHTML += crearIngresoHTML(ingresos[i]);
     }
     document.getElementById("lista_ingresos").innerHTML = ingresosHTML;
-    return;
-
-    /*ingresos.forEach(ingreso => ingresosHTML += crearIngresoHTML(ingreso));
-    document.getElementById("lista_ingresos").innerHTML = ingresosHTML;*/
 }
 const crearIngresoHTML = (ingreso) => {
     let ingresoHTML = `<div id="lista_ingresos">
@@ -154,7 +138,7 @@ const crearIngresoHTML = (ingreso) => {
 
             <div class="elemento_eliminar">
                 <button class="elemento_eliminar_btn">
-                    <i class="ion-ios-close-outline"></i>
+                    <ion-icon name="close-circle-outline" onClick="eliminarIngresos(${ingreso.id});"></ion-icon>
                 </button>
             </div>
         </div>
@@ -162,14 +146,12 @@ const crearIngresoHTML = (ingreso) => {
     return ingresoHTML;
 }
 /// Eliminar Ingresos
-
-const eliminarIngresos = (id) => {
-    const eliminarIngresos = ingresos.findIndex(ingreso => ingreso === id);
-    ingresos.splice(eliminarIngresos, 1);
+const eliminarIngresos = (ingresoId) => {
+    let indiceEliminar = ingresos.findIndex(ingreso => ingreso.id === ingresoId);
+    ingresos.splice(indiceEliminar, 1);
     cargarCabecero();
     cargarIngresos();
 }
-
 /// Egresos
 const cargarEgresos = () => {
     let egresosHTML = "";
@@ -197,7 +179,7 @@ const crearEgresoHTML = (egreso) => {
 
             <div class="elemento_eliminar">
                 <button class="elemento_eliminar_btn">
-                    <ion-icon name="close-circle-outline"></ion-icon>
+                    <ion-icon name="close-circle-outline" onClick="eliminarEgresos(${egreso.id})"></ion-icon>
                 </button>
             </div>
         </div>
@@ -206,9 +188,9 @@ const crearEgresoHTML = (egreso) => {
 }
 //Eliminar Egresos
 
-const eliminarEgresos = (id) => {
-    let indiceEliminar = "";
-
+const eliminarEgresos = (egresoId) => {
+    let indiceEliminar = egresos.findIndex(egreso => egreso.id === egresoId);
+    egresos.splice(indiceEliminar, 1);
     cargarCabecero();
     cargarEgresos();
 }
@@ -241,6 +223,3 @@ function cargarApp() {
     cargarIngresos();
     cargarEgresos();
 }
-
-console.log(ingresos);
-console.log(egresos);
