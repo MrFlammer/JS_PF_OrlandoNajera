@@ -68,10 +68,9 @@ nuevoEgreso("Ropa", 800);
 /// Controlador del modulo de presupuesto
 const cargarCabecero = () => {
     const presupuesto = totalIngresos() - totalEgresos();
-    const porcentajeEgreso = totalEgresos() / totalIngresos();
 
     document.getElementById("presupuesto").innerHTML = formatoMoneda(presupuesto);
-    document.getElementById("porcentaje").innerHTML = formatoPorcentaje(porcentajeEgreso);
+    document.getElementById("porcentaje").innerHTML = formatoPorcentaje(porcentajeEgreso(totalIngresos(), totalEgresos()));
     document.getElementById("ingresos").innerHTML = formatoMoneda(totalIngresos());
     document.getElementById("egresos").innerHTML = formatoMoneda(totalEgresos());
 }
@@ -83,9 +82,18 @@ const totalIngresos = () => {
 }
 
 const totalEgresos = () => {
-    let sum = egresos.reduce((previous, current) => {return previous + current.valor}, 0);
+    let sum = 0
+    sum = egresos.reduce((previous, current) => {return previous + current.valor}, 0);
     return sum
 }
+
+const porcentajeEgreso = (ingresos, egresos) => {
+    let porcentajeCabecero = 0;
+    if (ingresos <= 0 || egresos <= 0 ){return 0;}
+    else {porcentajeCabecero = egresos / ingresos;}
+    return porcentajeCabecero;
+}
+
 ///controladores del formato de los datos
 const formatoMoneda = (transaccion) => {
     
@@ -105,7 +113,7 @@ const formatoMoneda = (transaccion) => {
 }
 
 const formatoPorcentaje = (porcentaje) => {
-    
+
     const locales = 'esp-MX';
     
     const opciones = {style: 'percent'};
@@ -114,6 +122,7 @@ const formatoPorcentaje = (porcentaje) => {
     const porcentajePrecio = formatoPorcentado.format(porcentaje);
 
     return porcentajePrecio;
+    
 }
 ///Carga dinamica de datos
 //ingresos
