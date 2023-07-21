@@ -124,6 +124,7 @@ body {
     font-size: 18px;
     color: inherit;
     background-color: #fff;
+    padding: 10px;
     margin-right: 10px;
     font-weight: 300;
     transition: border 0.3s;
@@ -143,7 +144,7 @@ body {
 }
 
 .agregar_descripcion { width: 400px;}
-.agregar_valor { width: 100px;}
+.agregar_valor { width: 120px;}
 
 .agregar_btn {
     font-size: 35px;

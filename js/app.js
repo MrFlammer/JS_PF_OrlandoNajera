@@ -135,10 +135,12 @@ const cargarIngresos = () => {
     for (i = 0; i < ingresos.length; i++) { 
         ingresosHTML += crearIngresoHTML(ingresos[i]);
     }
-    
     document.getElementById("lista_ingresos").innerHTML = ingresosHTML;
-}
+    return;
 
+    /*ingresos.forEach(ingreso => ingresosHTML += crearIngresoHTML(ingreso));
+    document.getElementById("lista_ingresos").innerHTML = ingresosHTML;*/
+}
 const crearIngresoHTML = (ingreso) => {
     let ingresoHTML = `<div id="lista_ingresos">
     <div class="elemento limpiarEstilos">
@@ -160,13 +162,11 @@ const crearIngresoHTML = (ingreso) => {
     </div>`
     return ingresoHTML;
 }
-
 /// Eliminar Ingresos
 
 const eliminarIngresos = (id) => {
-    let indiceEliminar = ingresos.findIndex((id) => {id = ingresos.id; return id});
-    ingresos.splice(indiceEliminar, 1);
-
+    const eliminarIngresos = ingresos.findIndex(ingreso => ingreso === id);
+    ingresos.splice(eliminarIngresos, 1);
     cargarCabecero();
     cargarIngresos();
 }
@@ -175,9 +175,8 @@ const eliminarIngresos = (id) => {
 const cargarEgresos = () => {
     let egresosHTML = "";
     for (i = 0; i < egresos.length; i++) { 
-        egresosHTML += crearIngresoHTML(egresos[i]);
+        egresosHTML += crearEgresoHTML(egresos[i]);
     }
-    
     document.getElementById("lista_egresos").innerHTML = egresosHTML;
 }
 
@@ -194,7 +193,7 @@ const crearEgresoHTML = (egreso) => {
             </div>
 
             <div class="elemento_porcentaje">
-                21%
+                ${formatoPorcentaje(egreso.valor / totalEgresos())}
             </div>
 
             <div class="elemento_eliminar">
@@ -218,29 +217,31 @@ const eliminarEgresos = (id) => {
 /// Cargar Datos
 
 const agregarDato = () => {
-    let forma = document.getElementById("forma");
-    let tipo = document.getElementById("tipo");
-    let descripcion = document.getElementById("descripcion");
-    let valor = document.getElementById("valor");
+    const forma = document.getElementById("forma");
+    const tipo = document.getElementById("tipo");
+    const descripcion = document.getElementById("descripcion").value;
+    const valor = document.getElementById("valor").value;
+    if(descripcion.value !== "" && typeof(descripcion) === 'string' || valor.value !== "" && typeof(valor) == 'number'){
 
-    if(descripcion !== "" && typeof(descripcion) === 'string' || valor !== "" && typeof(valor) === 'number'){
-        if(tipo === "ingreso") {
-            // se agrega la descripcion y el valor al arrglo de ingresos
-            nuevoIngreso(descripcion, valor);
+        if (tipo.value === "ingreso"){
+            nuevoIngreso(descripcion, +valor);
             cargarCabecero();
             cargarIngresos();
-        }
-        else {
-            //se agrega la descripcion y el valor al arreglo de egresos
-            nuevoEgreso(descripcion, valor);
+        } 
+        else if (tipo.value === "egreso"){
+            nuevoEgreso(descripcion, +valor);
             cargarCabecero();
             cargarEgresos();
         }
     }
-}
-
-function cargarApp () {
+    else {console.log("Hola");}
+} 
+/// Control App
+function cargarApp() {
     cargarCabecero();
     cargarIngresos();
     cargarEgresos();
 }
+
+console.log(ingresos);
+console.log(egresos);
