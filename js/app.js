@@ -211,7 +211,7 @@ const agregarDato = () => {
     const tipo = document.getElementById("tipo");
     const descripcion = document.getElementById("descripcion").value;
     const valor = document.getElementById("valor").value;
-    if(descripcion.value !== "" && typeof(descripcion) === 'string' || valor.value !== "" && typeof(valor) === 'number'){
+    if((descripcion !== "" && valor !== "")){
 
         if (tipo.value === "ingreso"){
             nuevoIngreso(descripcion, +valor);
@@ -224,10 +224,13 @@ const agregarDato = () => {
             cargarEgresos();
         }
     }
-    else {alert("informacion invalida"); return;}
+    else {alert("Datos erroneos o vacios");}
+
+    forma.addEventListener('submit', function() {forma.reset();});
 } 
 /// Control App
 function cargarApp() {
+    forma.reset();
     cargarCabecero();
     cargarIngresos();
     cargarEgresos();
