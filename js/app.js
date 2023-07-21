@@ -74,8 +74,8 @@ nuevoEgreso("Ropa", 800);
 /// Controlador del modulo de presupuesto
 
 const cargarCabecero = () => {
-    var presupuesto = totalIngresos() - totalEgresos();
-    var porcentajeEgreso = totalEgresos() / totalIngresos();
+    const presupuesto = totalIngresos() - totalEgresos();
+    const porcentajeEgreso = totalEgresos() / totalIngresos();
 
     document.getElementById("presupuesto").innerHTML = formatoMoneda(presupuesto);
     document.getElementById("porcentaje").innerHTML = formatoPorcentaje(porcentajeEgreso);
@@ -127,7 +127,6 @@ const formatoPorcentaje = (porcentaje) => {
 }
 
 ///Carga dinamica de datos
-
 //ingresos
 
 const cargarIngresos = () => {
@@ -198,7 +197,7 @@ const crearEgresoHTML = (egreso) => {
 
             <div class="elemento_eliminar">
                 <button class="elemento_eliminar_btn">
-                    <i class="ion-ios-close-outline"></i>
+                    <ion-icon name="close-circle-outline"></ion-icon>
                 </button>
             </div>
         </div>
