@@ -211,7 +211,7 @@ const agregarDato = () => {
     const tipo = document.getElementById("tipo");
     const descripcion = document.getElementById("descripcion").value;
     const valor = document.getElementById("valor").value;
-    if(descripcion.value !== "" && typeof(descripcion) === 'string' || valor.value !== "" && typeof(valor) == 'number'){
+    if(descripcion.value !== "" && typeof(descripcion) === 'string' || valor.value !== "" && typeof(valor) === 'number'){
 
         if (tipo.value === "ingreso"){
             nuevoIngreso(descripcion, +valor);
@@ -224,7 +224,7 @@ const agregarDato = () => {
             cargarEgresos();
         }
     }
-    else {console.log("Hola");}
+    else {alert("informacion invalida"); return;}
 } 
 /// Control App
 function cargarApp() {

@@ -225,13 +225,13 @@ h2 {
 }
 
 .ingreso .elemento_valor,
-.ingreso .elemento_eliminar--btn {
+.ingreso .elemento_eliminar_btn {
     color: #28B9B5;
 }
 
 .egreso .elemento_valor,
 .egreso .elemento_porcentaje,
-.egreso .elemento_eliminar--btn {
+.egreso .elemento_eliminar_btn {
     color: #FF5049;
 }
 
@@ -240,7 +240,7 @@ h2 {
     float: left;
 }
 
-.elemento_eliminar--btn {
+.elemento_eliminar_btn {
     font-size: 22px;
     background: none;
     border: none;
@@ -251,9 +251,9 @@ h2 {
     display: none;
 }
 
-.elemento_eliminar--btn:focus { outline: none; }
-.elemento_eliminar--btn:active { transform: translateY(2px); }
+.elemento_eliminar_btn:focus { outline: none; }
+.elemento_eliminar_btn:active { transform: translateY(2px); }
 
-.elemento:hover .elemento_eliminar--btn { display: block; }
+.elemento:hover .elemento_eliminar_btn { display: block; }
 .elemento:hover .elemento_valor { transform: translateX(-20px); }
 .elemento:hover .elemento_porcentaje { transform: translateX(-20px); }
